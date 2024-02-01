@@ -1,18 +1,18 @@
 import { create } from "zustand";
 import { PokemonDB,Types, } from "@/interfaces/Pokemon";
+import { getTypes } from "@/libs/dbmethod/getTypes";
 
 
 interface PokemonState {
  originalPokemon: PokemonDB[];
  pokemons: PokemonDB[]; 
  currentPage: number;
- types: Types[];
  totalPage: number;
     addPokemons: (pokemons: PokemonDB[]) => void;
     addOriginalPokemon: (originalPokemon: PokemonDB[]) => void;
-    addTypes: (types: Types[]) => void;
     addCurrentPage: (currentPage: number) => void;
     getPokemonArray: () => PokemonDB[];
+    getTypes: () =>   void
 }
 
 
@@ -35,15 +35,17 @@ export const usePokemon = create<PokemonState>((set,get)=> {
 
     addOriginalPokemon: (originalPokemon: PokemonDB[]) => set(({originalPokemon: originalPokemon})),
     
-    addTypes: (types: Types[]) => set(({types: types})),
-
     addCurrentPage: (currentPage: number) => {
         const {pokemons} = get();
         const limint = pokemons.length;
         if(currentPage >= limint) return;
         set(({currentPage: currentPage}))
     },
-
+    getTypes: async () => {
+        const updateTypes = await getTypes();
+        if(updateTypes) return updateTypes;
+        return updateTypes;
+    },
     getPokemonArray: () => {
         const {currentPage, pokemons} = get();
         const start = currentPage * 15;
