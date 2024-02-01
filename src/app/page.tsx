@@ -1,35 +1,16 @@
-"use client"
-import { getPokemonAll } from "@/libs/dbmethod/getPokemon";
-import { PokemonDB } from "@/interfaces/Pokemon";
-import { useState,useEffect } from "react";
-import CardPokemon from "@/components/CardPokemon";
-
+'use client'
+import { useRouter } from "next/navigation"
 
 
 export default function Home() {
-  
-  const [pokemon, setPokemon] = useState<PokemonDB[]>([]);
-
-  const getPokemon = async () => {
-    const res = await getPokemonAll();
-    if (res !== undefined) {
-      setPokemon(res);
-    }
+  const router = useRouter()
+  const handleClick = () => {
+    router.push("/app")
   }
-
-  useEffect(()=>{
-    getPokemon();
-  },[])
-
-
-  return (
-    <section className="flex flex-wrap w-full h-auto">
-        { pokemon?.length > 0 && pokemon.map((item:PokemonDB)=>{
-      return (
-          <CardPokemon key={item.id} pokemon={item} />
-      )
-
-    })}
-    </section>
-  );
+    return (
+      <main className="w-full h-full text-center">
+         <h1 className="">Landing Page</h1>
+        <button className="m-[30%]" onClick={handleClick}>Go to App</button>
+      </main>
+    )
 }
