@@ -17,7 +17,12 @@ const config: Config = {
         "gradient-conic":
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },
+      colors:{
+        'gold': "hsl(51, 100%, 50%)",
+        'color-logo':"#020065"
+      }
     },
+    
   },
   darkMode: "class",
   plugins: [nextui()]
